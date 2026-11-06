@@ -1,0 +1,63 @@
+
+
+# Main Menu Header
+menu "LED Subsystem"
+
+config LED_SUBSYSTEM_ENABLE
+    bool "Enable LED Subsystem"
+    default y
+
+# The Blink Sleep Time block uses a choice/endchoice structure for the dropdown menu
+choice LED_BLINK_SLEEP_TIME
+    prompt "LED blink sleep time"
+    default LED_BLINK_SLEEP_1S
+    depends on LED_SUBSYSTEM_ENABLE
+
+config LED_BLINK_SLEEP_500MS
+    bool "500ms (fast)"
+
+config LED_BLINK_SLEEP_1S
+    bool "1s (medium)"
+
+config LED_BLINK_SLEEP_2S
+    bool "2s (slow)"
+
+endchoice
+
+# Advanced Settings Block
+config ADVANCED_LED_SETTINGS
+    bool "Advanced LED settings"
+    default n
+    depends on LED_SUBSYSTEM_ENABLE
+
+# These items automatically group inside "Advanced LED settings" using an 'if' block
+if ADVANCED_LED_SETTINGS
+
+config LED_BRIGHTNESS
+    int "LED brightness (0-100)"
+    range 0 100
+    default 100
+
+config LED_FADE_DURATION
+    int "LED fade duration (ms)"
+    default 500
+
+# Submenu inside Advanced settings
+menu "Expert settings"
+
+config ENABLE_LED_DEBUGGING
+    bool "Enable LED debugging"
+    default n
+
+config CUSTOM_BLINK_PATTERN
+    bool "Custom blink pattern"
+    default n
+
+endmenu # Expert settings
+
+endif # ADVANCED_LED_SETTINGS
+
+endmenu # LED Subsystem
+
+
+source "Kconfig.zephyr"
