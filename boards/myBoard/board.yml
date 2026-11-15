@@ -1,0 +1,6 @@
+board:
+  name: myBoard
+  full_name: My Board
+  vendor: iomico
+  socs:
+  - name: mcxa156

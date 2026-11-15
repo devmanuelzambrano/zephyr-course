@@ -16,6 +16,7 @@ int main(void)
     if (!gpio_is_ready_dt(&led)) return 0;
 
     if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;
+    LOG_INF("Ejecutando firmware compilado para la placa: %s", CONFIG_BOARD);
 
     while (1) {
         if (gpio_pin_toggle_dt(&led) < 0) return 0;
