@@ -1,0 +1,6 @@
+board:
+  name: myBoardSScratch
+  full_name: My Custom MCXA156 Board From Scratch
+  vendor: nxp
+  socs:
+    - name: mcxa156

@@ -8,6 +8,8 @@
 #include <fsl_clock.h>
 #include <fsl_spc.h>
 #include <soc.h>
+// My custom board message lib
+#include <zephyr/sys/printk.h> 
 
 /* Core clock frequency: 96MHz */
 #define CLOCK_INIT_CORE_CLOCK            96000000U
@@ -247,3 +249,12 @@ void board_early_init_hook(void)
 	/* Set SystemCoreClock variable. */
 	SystemCoreClock = CLOCK_INIT_CORE_CLOCK;
 }
+
+// My custom board message function
+static int my_board_init(void)
+{
+	printk("Board initialized\n");
+	return 0;
+}
+
+SYS_INIT(my_board_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);
