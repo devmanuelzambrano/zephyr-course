@@ -4,6 +4,7 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/logging/log.h>
+#include <drivers/led_sensor.h>
 
 LOG_MODULE_REGISTER(led_sensor, LOG_LEVEL_INF);
 
@@ -13,7 +14,22 @@ struct led_sensor_config {
 
 struct led_sensor_data {
 	bool state;
+    int32_t custom_param; /* Parámetro dinámico que modificará la extensión */
 };
+
+/* Nueva función de extensión personalizada */
+int led_sensor_set_custom_param(const struct device *dev, int32_t new_value)
+{
+	struct led_sensor_data *data = dev->data;
+
+	if (!device_is_ready(dev)) {
+		return -ENODEV;
+	}
+
+	data->custom_param = new_value;
+	LOG_INF("Parámetro dinámico actualizado a: %d", data->custom_param);
+	return 0;
+}
 
 static int led_sensor_sample_fetch(const struct device *dev, enum sensor_channel chan)
 {
