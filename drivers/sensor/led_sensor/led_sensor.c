@@ -60,7 +60,7 @@ static int led_sensor_channel_get(const struct device *dev,
 	}
 
 	data->state = false;
-	val->val1 = 0;
+	val->val1 = data->custom_param;
 	val->val2 = 0;
 	return 0;
 }
